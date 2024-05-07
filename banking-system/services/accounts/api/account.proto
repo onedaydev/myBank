@@ -1,0 +1,53 @@
+syntax = "proto3";
+package banking.account;
+option go_package = "github.com/onedaydev/myBank/banking-system/services/accounts/api";
+
+service AccountService {
+    rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+    rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
+    rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
+    rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
+}
+
+message AccountInfo {
+    string account_id = 1;   // 계좌 ID
+    string owner_name = 2;   // 계좌 소유자 이름
+    double balance = 3;      // 계좌 잔액
+    string currency = 4;     // 통화
+}
+
+message CreateAccountRequest {
+    string owner_name = 1;
+    double initial_deposit = 2;  // 최초 입금액
+    string currency = 3;
+}
+
+message CreateAccountResponse {
+    AccountInfo account = 1;  // 생성된 계좌 정보
+}
+
+message GetAccountRequest {
+    string account_id = 1;
+}
+
+message GetAccountResponse {
+    AccountInfo account = 1;
+}
+
+message UpdateAccountRequest {
+    string account_id = 1;
+    string owner_name = 2;
+}
+
+message UpdateAccountResponse {
+    AccountInfo account = 1;
+}
+
+message DeleteAccountRequest {
+    string account_id = 1;
+}
+
+message DeleteAccountResponse {
+    string account_id = 1;  // 삭제된 계좌 ID
+}
+

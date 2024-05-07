@@ -1,0 +1,76 @@
+<mxfile host="65bd71144e">
+    <diagram id="kpE1elUkgaC86r07c1nq" name="페이지-1">
+        <mxGraphModel dx="1153" dy="529" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="42" value="Account.proto&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontStyle=4;labelPosition=center;verticalLabelPosition=top;align=left;verticalAlign=bottom;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="40" width="560" height="840" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Client" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.management_console;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="20" y="210" width="63" height="63" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Server" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.traditional_server;fillColor=#7D7C7C;gradientColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="180" width="46.5" height="63" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="CreateAccountRequest" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="80" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="string owner_name&#10;double initial_deposit&#10;string currency" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="36">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="CreateAccountResponse" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="80" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="AccountInfo account" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="38">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="AccountInfo" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="272" y="730" width="283" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="string account_id // 계좌 ID&#10;string owner_name // 계좌 소유자 이름&#10;double balance // 계좌 잔액&#10;string currency // 통화" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="40">
+                    <mxGeometry y="30" width="283" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="GetAccountRequest" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="243" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="string account_id" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="46">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="GetAccountResponse" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="240" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="AccountInfo account" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="48">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="UpdateAccountResponse" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="400" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="AccountInfo account" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="50">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="DeleteAccountResponse" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="560" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" style="edgeStyle=none;html=1;entryX=0.5;entryY=0.167;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="52" source="53" target="52">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="string account_id" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="52">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="DeleteAccountRequest" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="560" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="string account_id" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="55">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="UpdateAccountRequest" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="400" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="string account_id&#10;string owner_name " style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="57">
+                    <mxGeometry y="30" width="160" height="90" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
