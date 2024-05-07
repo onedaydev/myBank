@@ -6,9 +6,14 @@ import (
 	"fmt"
 	"io"
 	"os"
-
-	pb "github.com/onedaydev/myBank/banking-system/services/accounts/api"
 )
+
+type AccountData struct {
+	AccountID string
+	OwnerName string
+	Balance   float64
+	Currency  string
+}
 
 type DBConfig struct {
 	DBUser     string `json:"dbUser"`
@@ -19,7 +24,7 @@ type DBConfig struct {
 }
 
 func ConnectToDB() (*sql.DB, error) {
-	configFile, err := os.Open("../confing/config.json")
+	configFile, err := os.Open("../config/config.json")
 	if err != nil {
 		return nil, err
 	}
@@ -51,9 +56,9 @@ func ConnectToDB() (*sql.DB, error) {
 	return db, nil
 }
 
-func CreateAccount(db *sql.DB, info *pb.AccountInfo) error {
+func CreateAccount(db *sql.DB, info AccountData) error {
 	query := `INSERT INTO accounts (accountId, owner_name, balance, currency) VALUES (?, ?, ?, ?)`
-	_, err := db.Exec(query, info.AccountId, info.OwnerName, info.Balance, info.Currency)
+	_, err := db.Exec(query, info.AccountID, info.OwnerName, info.Balance, info.Currency)
 	if err != nil {
 		return fmt.Errorf("CreateAccount error: %v", err)
 	}
