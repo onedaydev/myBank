@@ -57,19 +57,73 @@ func (s *AccountServer) CreateAccount(ctx context.Context, req *pb.CreateAccount
 	}, nil
 }
 
-// func (s *AccountServer) GetAccount(ctx context.Context, req *pb.GetAccountRequest) (*pb.GetAccountResponse, error) {
-// 	account, err := fetchAccountFromDB(req.AccountId)
+func (s *AccountServer) GetAccount(ctx context.Context, req *pb.GetAccountRequest) (*pb.GetAccountResponse, error) {
+	conn, err := db.ConnectToDB()
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to connect to database: %v", err)
+	}
+	account, err := db.GetRow(conn, req.AccountId)
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "Account not found: %v", err)
+	}
+	return &pb.GetAccountResponse{
+		Account: &pb.AccountInfo{
+			AccountId: account.AccountID,
+			OwnerName: account.OwnerName,
+			Balance:   account.Balance,
+			Currency:  account.Currency,
+		},
+	}, nil
+}
+
+func (s *AccountServer) UpdateAccount(ctx context.Context, req *pb.UpdateAccountRequest) (*pb.UpdateAccountResponse, error) {
+	conn, err := db.ConnectToDB()
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to connect to database: %v", err)
+	}
+	account, err := db.UpdateOwnerName(conn, req.AccountId, req.OwnerName)
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "Account not found: %v", err)
+	}
+	return &pb.UpdateAccountResponse{
+		Account: &pb.AccountInfo{
+			AccountId: account.AccountID,
+			OwnerName: account.OwnerName,
+			Balance:   account.Balance,
+			Currency:  account.Currency,
+		},
+	}, nil
+}
+
+// func (s *AccountServer) UpdateBalanceAccount(ctx context.Context, req *pb.UpdateAccountBalanceRequest) (*pb.UpdateAccountBalanceResponse, error) {
+// 	conn, err := db.ConnectToDB()
+// 	if err != nil {
+// 		return nil, status.Errorf(codes.Internal, "failed to connect to database: %v", err)
+// 	}
+// 	account, err := db.UpdateRow(conn, req.AccountId, req.Balance)
 // 	if err != nil {
 // 		return nil, status.Errorf(codes.NotFound, "Account not found: %v", err)
 // 	}
-
-// 	return &pb.GetAccountResponse{Account: account}, nil
+// 	return &pb.UpdateAccountBalanceResponse{
+// 		Account: &pb.AccountInfo{
+// 			AccountId: account.AccountID,
+// 			OwnerName: account.OwnerName,
+// 			Balance:   account.Balance,
+// 			Currency:  account.Currency,
+// 		},
+// 	}, nil
 // }
 
-// func (s *AccountServer) UpdateAccount(ctx context.Context, req *pb.UpdateAccountRequest) (*pb.UpdateAccountResponse, error) {
-
-// }
-
-// func (s *AccountServer) DeleteAccount(ctx context.Context, req *pb.DeleteAccountRequest) (*pb.DeleteAccountResponse, error) {
-
-// }
+func (s *AccountServer) DeleteAccount(ctx context.Context, req *pb.DeleteAccountRequest) (*pb.DeleteAccountResponse, error) {
+	conn, err := db.ConnectToDB()
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to connect to database: %v", err)
+	}
+	err = db.DeleteRow(conn, req.AccountId)
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "Account not found: %v", err)
+	}
+	return &pb.DeleteAccountResponse{
+		AccountId: req.AccountId,
+	}, nil
+}

@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	port = ":500051"
+	port = ":50051"
 )
 
 func main() {
@@ -20,7 +20,6 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	// DB 연결
 	dbConn, err := db.ConnectToDB()
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
@@ -29,7 +28,6 @@ func main() {
 
 	s := grpc.NewServer()
 
-	// 계좌 관리 서비스 등록
 	pb.RegisterAccountServiceServer(s, server.NewAccountServer(dbConn))
 
 	// gRPC 서버 리플렉션 활성화

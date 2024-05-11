@@ -6,6 +6,7 @@ service AccountService {
     rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
     rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
     rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
+    rpc UpdateAccountBalance(UpdateAccountBalanceRequest) returns (UpdateAccountBalanceResponse);
     rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
 }
 
@@ -31,6 +32,15 @@ message GetAccountRequest {
 }
 
 message GetAccountResponse {
+    AccountInfo account = 1;
+}
+
+message UpdateAccountBalanceRequest {
+    string account_id = 1;
+    double balance = 2;
+}
+
+message UpdateAccountBalanceResponse {
     AccountInfo account = 1;
 }
 
