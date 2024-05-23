@@ -1,0 +1,21 @@
+syntax = "proto3";
+package banking.alarm;
+option go_package = "github.com/onedaydev/myBank/banking-system/services/alarm/api";
+
+service AlarmService {
+    rpc GetAlarm (AlarmGetRequest) returns (stream AlarmGetReply) {}
+}
+
+message AlarmGetRequest {
+    string user_id = 1; 
+    repeated string event_types = 2;
+}
+
+message AlarmGetReply {
+    string alarm_id = 1;
+    string user_id = 2;
+    string event_type = 3;
+    string message = 4;
+    int64 timestamp = 5;
+}
+

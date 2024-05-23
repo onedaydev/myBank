@@ -26,8 +26,8 @@ type DBConfig struct {
 }
 
 func ConnectToDB() (*sql.DB, error) {
-	// configPath := "/../config/config.json"
-	configPath := "../../config/config.json" // Use for server_test
+	configPath := "../config/config.json"
+	// configPath := "../../config/config.json" // 단위 테스트용(server_test.go)
 	configFile, err := os.Open(configPath)
 
 	if err != nil {
@@ -63,9 +63,16 @@ func ConnectToDB() (*sql.DB, error) {
 
 func CreateAccount(db *sql.DB, info AccountData) error {
 	query := `INSERT INTO accounts (account_id, owner_name, balance, currency) VALUES (?, ?, ?, ?)`
-	_, err := db.Exec(query, info.AccountID, info.OwnerName, info.Balance, info.Currency)
+	result, err := db.Exec(query, info.AccountID, info.OwnerName, info.Balance, info.Currency)
 	if err != nil {
 		return fmt.Errorf("CreateAccount error: %v", err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("error checking affected rows: %v", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("no rows affected, Must clarify this error")
 	}
 	return nil
 }
@@ -83,34 +90,46 @@ func GetRow(db *sql.DB, requestID string) (AccountData, error) {
 	return data, nil
 }
 
-// func UpdateBalance(db *sql.DB) {
-// 	query := `UPDATE accounts SET balance = ? WHERE account_id = ?`
+func UpdateOwnerName(db *sql.DB, requestID string, newName string) (AccountData, error) {
+	updateQuery := `UPDATE accounts SET owner_name = ? WHERE account_id = ?`
+	result, err := db.Exec(updateQuery, newName, requestID)
 
-// 	var data AccountData
-
-// 	err := db.QueryRow(query, requestID).Scan(&data.AccountID, &data.OwnerName, &data.Balance, &data.Currency)
-// 	if err != nil {
-// 		return AccountData{}, fmt.Errorf("QueryRow error: %v", err)
-// 	}
-// 	return data, nil
-// }
-
-func UpdateOwnerName(db *sql.DB, requestID string, NewName string) (AccountData, error) {
-	query := `UPDATE accounts SET OwnerName = ? WHERE account_id = ?`
-
-	var data AccountData
-	err := db.QueryRow(query, NewName, requestID).Scan(&data.AccountID, &data.OwnerName, &data.Balance, &data.Currency)
 	if err != nil {
-		return AccountData{}, fmt.Errorf("QueryRow error: %v", err)
+		return AccountData{}, fmt.Errorf("update error: %v", err)
 	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return AccountData{}, fmt.Errorf("error checking affected rows: %v", err)
+	}
+	if rowsAffected == 0 {
+		return AccountData{}, fmt.Errorf("no rows affected, possibly nothing changed")
+	}
+
+	selectQuery := `SELECT account_id, owner_name, balance, currency FROM accounts WHERE account_id = ?`
+	var data AccountData
+	err = db.QueryRow(selectQuery, requestID).Scan(&data.AccountID, &data.OwnerName, &data.Balance, &data.Currency)
+	if err != nil {
+		return AccountData{}, fmt.Errorf("query row error: %v", err)
+	}
+
 	return data, nil
 }
 
 func DeleteRow(db *sql.DB, requestID string) error {
 	query := `DELETE FROM accounts WHERE account_id = ?`
-	_, err := db.Exec(query, requestID)
+	result, err := db.Exec(query, requestID)
 	if err != nil {
 		return fmt.Errorf("QueryRow error: %v", err)
 	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("error checking affected rows: %v", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("no rows affected, possibly invaild account ID")
+	}
+
 	return nil
 }

@@ -8,6 +8,7 @@ import (
 	db "github.com/onedaydev/myBank/banking-system/services/accounts/internal/db"
 	"github.com/onedaydev/myBank/banking-system/services/accounts/internal/server"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -31,7 +32,7 @@ func main() {
 	pb.RegisterAccountServiceServer(s, server.NewAccountServer(dbConn))
 
 	// gRPC 서버 리플렉션 활성화
-	// reflection.Register(s)
+	reflection.Register(s)
 
 	log.Printf("Server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
